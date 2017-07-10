@@ -18,11 +18,10 @@ func Hello(ctx *fasthttp.RequestCtx) {
 	fmt.Fprintf(ctx, "hello, %s!\n", ctx.UserValue("name"))
 }
 
-func Places(ctx *fasthttp.RequestCtx) {
+func GetAllPlaces(ctx *fasthttp.RequestCtx) {
 	// Read
 	places := []Place{}
 	db.DB.Find(&places) // find places
-	fmt.Println(places)
 	list, err := json.Marshal(&places)
 	if err == nil {
 		for _, item := range list {
@@ -37,23 +36,27 @@ func Places(ctx *fasthttp.RequestCtx) {
 	ctx.SetStatusCode(fasthttp.StatusOK)
 }
 
-func PlaceById(ctx *fasthttp.RequestCtx) {
+func GetPlace(ctx *fasthttp.RequestCtx) {
 	// Read
 	var place Place
+	var service Service
 	// Raw SQL
 	db.DB.First(&place, ctx.UserValue("id"))
-	// set some headers and status code first
-	ctx.SetContentType("application/json")
-	ctx.SetStatusCode(fasthttp.StatusOK)
+	db.DB.Find("services").Where("id = ?", place.Id).Scan(&service)
+	fmt.Println(service.Name)
+
 	p, err := json.Marshal(&place)
 	if err == nil {
 		fmt.Fprintf(ctx, string(p))
 	} else{
 		log.Fatal("Cannot encode to JSON ", err)
 	}
+	// set some headers and status code first
+	ctx.SetContentType("application/json")
+	ctx.SetStatusCode(fasthttp.StatusOK)
 }
 
-func Countries(ctx *fasthttp.RequestCtx) {
+func GetAllCountries(ctx *fasthttp.RequestCtx) {
 	// Read
 	countries := []Country{}
 	db.DB.Find(&countries) // find places
@@ -72,7 +75,7 @@ func Countries(ctx *fasthttp.RequestCtx) {
 	ctx.SetStatusCode(fasthttp.StatusOK)
 }
 
-func CountryById(ctx *fasthttp.RequestCtx) {
+func GetCountry(ctx *fasthttp.RequestCtx) {
 	// Read
 	var country Country
 	// Raw SQL
@@ -88,7 +91,7 @@ func CountryById(ctx *fasthttp.RequestCtx) {
 	}
 }
 
-func Services(ctx *fasthttp.RequestCtx) {
+func GetAllServices(ctx *fasthttp.RequestCtx) {
 	// Read
 	services := []Service{}
 	db.DB.Find(&services) // find places
@@ -107,7 +110,7 @@ func Services(ctx *fasthttp.RequestCtx) {
 	ctx.SetStatusCode(fasthttp.StatusOK)
 }
 
-func ServiceById(ctx *fasthttp.RequestCtx) {
+func GetService(ctx *fasthttp.RequestCtx) {
 	// Read
 	var service Service
 	// Raw SQL
@@ -123,3 +126,37 @@ func ServiceById(ctx *fasthttp.RequestCtx) {
 	}
 }
 
+func GetAllProducts(ctx *fasthttp.RequestCtx) {
+	// Read
+	products := []Product{}
+	db.DB.Find(&products) // find places
+	fmt.Println(products)
+	list, err := json.Marshal(&products)
+	if err == nil {
+		for _, item := range list {
+			// process here
+			fmt.Fprintf(ctx, string(item))
+		}
+	} else{
+		log.Fatal("Cannot encode to JSON ", err)
+	}
+	// set some headers and status code first
+	ctx.SetContentType("application/json")
+	ctx.SetStatusCode(fasthttp.StatusOK)
+}
+
+func GetProduct(ctx *fasthttp.RequestCtx) {
+	// Read
+	var product Product
+	// Raw SQL
+	db.DB.Where("id = ?", strings.ToUpper(ctx.UserValue("id").(string))).First(&product)
+	// set some headers and status code first
+	ctx.SetContentType("application/json")
+	ctx.SetStatusCode(fasthttp.StatusOK)
+	p, err := json.Marshal(&product)
+	if err == nil {
+		fmt.Fprintf(ctx, string(p))
+	} else{
+		log.Fatal("Cannot encode to JSON ", err)
+	}
+}

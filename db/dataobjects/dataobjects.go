@@ -1,9 +1,10 @@
 package dataobjects
 
 type Product struct {
-	Id		int	`gorm:"primary_key; AUTO_INCREMENT"`
-	Name	string	`gorm:"size:255"`
-	Alias	string	`gorm:"size:250"`
+	Id			int		`gorm:"primary_key; AUTO_INCREMENT"`
+	Name		string	`gorm:"size:255"`
+	Alias		string	`gorm:"size:250"`
+	Country		Country	`gorm:"ForeignKey:Id"` //ISO "ALPHA-2 Code"
 }
 
 type Country struct {
@@ -17,13 +18,12 @@ type Service struct {
 }
 
 type Place struct {
-	Id		int 		`gorm:"primary_key; AUTO_INCREMENT"`
+	Id			int 		`gorm:"primary_key; AUTO_INCREMENT"`
 	Name		string		`gorm:"size:150"`
 	Address		string		`gorm:"size:255"`
 	Latitude	string		`gorm:"size:10"`
 	Longitude	string		`gorm:"size:10"`
-	Services	Service
-	Products	[]Product	`gorm:"many2many:place_products;"`
-	Country	Country		//ISO "ALPHA-2 Code"
+	Services	Service		`gorm:"ForeignKey:Id"`
+	Products	[]Product	`gorm:"many2many:place_products"`
 }
 

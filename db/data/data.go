@@ -31,10 +31,11 @@ func InitialiseDB(db *gorm.DB) {
 		/*
 			PRODUCTS
 		*/
-		//insertProducts(db)
+		insertProducts(db)
 		/*
 			PLACES
 		*/
+		insertPlaces(db)
 	}
 }
 
@@ -44,7 +45,9 @@ func checkDatabaseEmpty(db *gorm.DB){
 	db.Find(&countries).Count(&countCountries)
 	db.Find(&services).Count(&countServices)
 	db.Find(&product).Count(&countProducts)
-	if countPlaces == 0 && countCountries == 0 && countServices == 0 && countProducts == 0 {
+	db.Find(&places).Count(&countPlaces)
+	if countPlaces == 0 && countCountries == 0 &&
+		countServices == 0 && countProducts == 0 && countPlaces == 0 {
 		dbInitialised = true
 	}
 }
@@ -90,33 +93,49 @@ func insertServices(db *gorm.DB){
 	db.Exec(query,"MK","MARKET")
 	db.Exec(query,"CO","COMPANY")
 	db.Exec(query,"PE","PEOPLE")
+	db.Exec(query,"BT","BOTTLE SHOP")
 }
 
 func insertProducts(db *gorm.DB){
-	var query = "INSERT INTO products VALUES(?,?)"
+	var query = "INSERT INTO products VALUES(?,?,?,?)"
 	/*
 		TYPE OF PRODUCTS
 	 */
-	db.Exec(query,"AGUARDIENTE ANTIOQUEÑO","")
-	db.Exec(query,"AJIACO CONGELADO","")
-	db.Exec(query,"AREPAS","")
-	db.Exec(query,"AREQUIPE","")
-	db.Exec(query,"BOCADILLO","")
-	db.Exec(query,"BOM BOM BUM","")
-	db.Exec(query,"CAFECITO","")
-	db.Exec(query,"CHOCOLATINA JET","")
-	db.Exec(query,"CHORIZO","")
-	db.Exec(query,"CROQUETAS DE YUCA","")
-	db.Exec(query,"HARINA PAN","")
-	db.Exec(query,"MASA DE BUÑUELOS","")
-	db.Exec(query,"PAN DE BONO","")
-	db.Exec(query,"PANELA","")
-	db.Exec(query,"PAPAS CRIOLLAS","")
-	db.Exec(query,"PONY MALTA","")
-	db.Exec(query,"PULPAS DE FRUTA","")
-	db.Exec(query,"RON MEDELLIN","")
-	db.Exec(query,"SANCOCHO CONGELADO","")
-	db.Exec(query,"TAJADAS DE PLATANO","")
-	db.Exec(query,"TOSTONES","")
-	db.Exec(query,"TRIGUISAR","")
+	db.Exec(query,1,"AGUARDIENTE ANTIOQUEÑO","","CO")
+	db.Exec(query,2,"AJIACO CONGELADO","","CO")
+	db.Exec(query,3,"AREPAS","","CO")
+	db.Exec(query,4,"AREQUIPE","","CO")
+	db.Exec(query,5,"BOCADILLO","","CO")
+	db.Exec(query,6,"BOM BOM BUM","","CO")
+	db.Exec(query,7,"CAFECITO","","CO")
+	db.Exec(query,8,"CHOCOLATINA JET","","CO")
+	db.Exec(query,9,"CHORIZO","","CO")
+	db.Exec(query,10,"CROQUETAS DE YUCA","","CO")
+	db.Exec(query,11,"HARINA PAN","","CO")
+	db.Exec(query,12,"MASA DE BUÑUELOS","","CO")
+	db.Exec(query,13,"PAN DE BONO","","CO")
+	db.Exec(query,14,"PANELA","","CO")
+	db.Exec(query,15,"PAPAS CRIOLLAS","","CO")
+	db.Exec(query,16,"PONY MALTA","","CO")
+	db.Exec(query,17,"PULPAS DE FRUTA","","CO")
+	db.Exec(query,18,"RON MEDELLIN","","CO")
+	db.Exec(query,19,"SANCOCHO CONGELADO","","CO")
+	db.Exec(query,20,"TAJADAS DE PLATANO","","CO")
+	db.Exec(query,21,"TOSTONES","","CO")
+	db.Exec(query,22,"TRIGUISAR","","CO")
+}
+
+func insertPlaces(db *gorm.DB){
+	var query = "INSERT INTO places VALUES(?,?,?,?,?,?)"
+	/*
+		TYPE OF PRODUCTS
+	 */
+	db.Exec(query,1,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
+	db.Exec(query,2,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
+	db.Exec(query,3,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
+	db.Exec(query,4,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
+	db.Exec(query,5,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
+	db.Exec(query,6,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
+	db.Exec(query,7,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
+	db.Exec(query,8,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
 }

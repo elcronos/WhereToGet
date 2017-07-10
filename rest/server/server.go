@@ -13,12 +13,14 @@ func init(){
 	//All Routes
 	routes.GET("/", handler.Index)
 	routes.GET("/hello/:name", handler.Hello)
-	routes.GET("/places", handler.Places)
-	routes.GET("/places/:id", handler.PlaceById)
-	routes.GET("/countries", handler.Countries)
-	routes.GET("/countries/:id", handler.CountryById)
-	routes.GET("/services", handler.Services)
-	routes.GET("/services/:id", handler.ServiceById)
+	routes.GET("/places", handler.GetAllPlaces)
+	routes.GET("/places/:id", handler.GetPlace)
+	routes.GET("/countries", handler.GetAllCountries)
+	routes.GET("/countries/:id", handler.GetCountry)
+	routes.GET("/services", handler.GetAllServices)
+	routes.GET("/services/:id", handler.GetService)
+	routes.GET("/products", handler.GetAllProducts)
+	routes.GET("/products/:id", handler.GetProduct)
 
 	//Routes Handler
 	log.Fatal(fasthttp.ListenAndServe(":3000", routes.Handler))
