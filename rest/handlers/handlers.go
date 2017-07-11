@@ -10,6 +10,11 @@ import (
 	"log"
 )
 
+type errorMessage struct {
+	Status		int
+	Message		string
+}
+
 func Index(ctx *fasthttp.RequestCtx) {
 	fmt.Fprint(ctx, "Welcome!\n")
 }
@@ -20,8 +25,21 @@ func Hello(ctx *fasthttp.RequestCtx) {
 
 func GetAllPlaces(ctx *fasthttp.RequestCtx) {
 	// Read
+	var place Place
+	var service Service
+	var products []Product
+	var index int
 	places := []Place{}
 	db.DB.Find(&places) // find places
+	for index , place = range places {
+		//Find Service
+		db.DB.Where("id = ?", place.ServicesId).First(&service)
+		places[index].Services = service
+		//Find Products
+		db.DB.Model(&place).Association("Products").Find(&products)
+		places[index].Products = products
+	}
+
 	list, err := json.Marshal(&places)
 	if err == nil {
 		for _, item := range list {
@@ -40,20 +58,39 @@ func GetPlace(ctx *fasthttp.RequestCtx) {
 	// Read
 	var place Place
 	var service Service
+	var products []Product
+	var error errorMessage
 	// Raw SQL
 	db.DB.First(&place, ctx.UserValue("id"))
-	db.DB.Find("services").Where("id = ?", place.Id).Scan(&service)
-	fmt.Println(service.Name)
-
-	p, err := json.Marshal(&place)
-	if err == nil {
-		fmt.Fprintf(ctx, string(p))
-	} else{
-		log.Fatal("Cannot encode to JSON ", err)
+	if place.Id != 0 {
+		//Find Service
+		db.DB.Where("id = ?", place.ServicesId).First(&service)
+		place.Services = service
+		//Find Products
+		db.DB.Model(&place).Association("Products").Find(&products)
+		place.Products = products
+		p, err := json.Marshal(&place)
+		if err == nil {
+			fmt.Fprintf(ctx, string(p))
+			ctx.SetStatusCode(fasthttp.StatusOK)
+		} else {
+			log.Fatal("Cannot encode to JSON ", err)
+			error.Status = fasthttp.StatusInternalServerError
+			error.Message = "Error in handler GetPlace"
+			errorJson, _ := json.Marshal(&error)
+			fmt.Fprintf(ctx, string(errorJson))
+			ctx.SetStatusCode(error.Status)
+		}
+	}	else{
+		error.Status = fasthttp.StatusNoContent
+		error.Message = "There is not content this request"
+		errorJson, _ := json.Marshal(&error)
+		fmt.Fprintf(ctx, string(errorJson))
+		ctx.SetStatusCode(error.Status)
 	}
 	// set some headers and status code first
 	ctx.SetContentType("application/json")
-	ctx.SetStatusCode(fasthttp.StatusOK)
+
 }
 
 func GetAllCountries(ctx *fasthttp.RequestCtx) {
@@ -128,9 +165,14 @@ func GetService(ctx *fasthttp.RequestCtx) {
 
 func GetAllProducts(ctx *fasthttp.RequestCtx) {
 	// Read
+	var country Country
 	products := []Product{}
-	db.DB.Find(&products) // find places
-	fmt.Println(products)
+	db.DB.Find(&products) // find products
+	for index, product := range products {
+		//Find Country
+		db.DB.Where("id = ?", product.CountryId).First(&country)
+		products[index].Country = country
+	}
 	list, err := json.Marshal(&products)
 	if err == nil {
 		for _, item := range list {
@@ -148,15 +190,18 @@ func GetAllProducts(ctx *fasthttp.RequestCtx) {
 func GetProduct(ctx *fasthttp.RequestCtx) {
 	// Read
 	var product Product
+	var country Country
 	// Raw SQL
 	db.DB.Where("id = ?", strings.ToUpper(ctx.UserValue("id").(string))).First(&product)
-	// set some headers and status code first
-	ctx.SetContentType("application/json")
-	ctx.SetStatusCode(fasthttp.StatusOK)
+	//Find Country
+	db.DB.Where("id = ?", product.CountryId).First(&country)
+	product.Country = country
 	p, err := json.Marshal(&product)
 	if err == nil {
 		fmt.Fprintf(ctx, string(p))
+		ctx.SetStatusCode(fasthttp.StatusOK)
 	} else{
-		log.Fatal("Cannot encode to JSON ", err)
+		log.Fatal("Cannot encode to JSON", err)
 	}
+	ctx.SetContentType("application/json")
 }
