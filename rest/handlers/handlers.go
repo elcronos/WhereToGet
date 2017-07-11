@@ -11,8 +11,8 @@ import (
 )
 
 type errorMessage struct {
-	Status		int
-	Message		string
+	Status		int		`json:"status"`
+	Message		string	`json:"message"`
 }
 
 func Index(ctx *fasthttp.RequestCtx) {
@@ -82,10 +82,7 @@ func GetPlace(ctx *fasthttp.RequestCtx) {
 			ctx.SetStatusCode(error.Status)
 		}
 	}	else{
-		error.Status = fasthttp.StatusNoContent
-		error.Message = "There is not content this request"
-		errorJson, _ := json.Marshal(&error)
-		fmt.Fprintf(ctx, string(errorJson))
+		fmt.Fprintf(ctx, string(fasthttp.StatusNoContent))
 		ctx.SetStatusCode(error.Status)
 	}
 	// set some headers and status code first
