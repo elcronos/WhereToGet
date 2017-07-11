@@ -47,7 +47,7 @@ func GetAllPlaces(ctx *fasthttp.RequestCtx) {
 		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 	// set some headers and status code first
-	ctx.SetContentType("application/json")
+	ctx = AllowCORS(ctx)
 }
 
 func GetPlace(ctx *fasthttp.RequestCtx) {
@@ -76,7 +76,7 @@ func GetPlace(ctx *fasthttp.RequestCtx) {
 		ctx = ex.ErrorHandler(ctx, fasthttp.StatusNoContent, "")
 	}
 	// set some headers and status code first
-	ctx.SetContentType("application/json")
+	ctx = AllowCORS(ctx)
 }
 
 func GetAllCountries(ctx *fasthttp.RequestCtx) {
@@ -94,7 +94,7 @@ func GetAllCountries(ctx *fasthttp.RequestCtx) {
 		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 	// set some headers and status code first
-	ctx.SetContentType("application/json")
+	ctx = AllowCORS(ctx)
 }
 
 func GetCountry(ctx *fasthttp.RequestCtx) {
@@ -102,8 +102,6 @@ func GetCountry(ctx *fasthttp.RequestCtx) {
 	var country Country
 	// Raw SQL
 	db.DB.Where("id = ?", strings.ToUpper(ctx.UserValue("id").(string))).First(&country)
-	// set some headers and status code first
-	ctx.SetContentType("application/json")
 	p, err := json.Marshal(&country)
 	if err == nil {
 		fmt.Fprintf(ctx, string(p))
@@ -111,6 +109,8 @@ func GetCountry(ctx *fasthttp.RequestCtx) {
 		log.Fatal("Cannot encode to JSON ", err)
 		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
+	// set some headers and status code first
+	ctx = AllowCORS(ctx)
 }
 
 func GetAllServices(ctx *fasthttp.RequestCtx) {
@@ -128,7 +128,7 @@ func GetAllServices(ctx *fasthttp.RequestCtx) {
 		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 	// set some headers and status code first
-	ctx.SetContentType("application/json")
+	ctx = AllowCORS(ctx)
 }
 
 func GetService(ctx *fasthttp.RequestCtx) {
@@ -136,8 +136,6 @@ func GetService(ctx *fasthttp.RequestCtx) {
 	var service Service
 	// Raw SQL
 	db.DB.Where("id = ?", strings.ToUpper(ctx.UserValue("id").(string))).First(&service)
-	// set some headers and status code first
-	ctx.SetContentType("application/json")
 	ctx.SetStatusCode(fasthttp.StatusOK)
 	p, err := json.Marshal(&service)
 	if err == nil {
@@ -146,6 +144,8 @@ func GetService(ctx *fasthttp.RequestCtx) {
 		log.Fatal("Cannot encode to JSON ", err)
 		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
+	// set some headers and status code first
+	ctx = AllowCORS(ctx)
 }
 
 func GetAllProducts(ctx *fasthttp.RequestCtx) {
@@ -169,7 +169,7 @@ func GetAllProducts(ctx *fasthttp.RequestCtx) {
 		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 	// set some headers and status code first
-	ctx.SetContentType("application/json")
+	ctx = AllowCORS(ctx)
 }
 
 func GetProduct(ctx *fasthttp.RequestCtx) {
@@ -189,6 +189,11 @@ func GetProduct(ctx *fasthttp.RequestCtx) {
 		log.Fatal("Cannot encode to JSON", err)
 		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
-	ctx.SetContentType("application/json")
+	ctx = AllowCORS(ctx)
 }
 
+func AllowCORS(ctx *fasthttp.RequestCtx) *fasthttp.RequestCtx{
+	ctx.Response.Header.Add("Access-Control-Allow-Origin", "*")
+	ctx.Response.Header.Add("Content-Type", "application/json")
+	return ctx
+}
