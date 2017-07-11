@@ -4,7 +4,8 @@ type Product struct {
 	Id			int		`gorm:"primary_key; AUTO_INCREMENT"`
 	Name		string	`gorm:"size:255"`
 	Alias		string	`gorm:"size:250"`
-	Country		Country	`gorm:"ForeignKey:Id"` //ISO "ALPHA-2 Code"
+	Country		Country	`gorm:"ForeignKey:Id;AssociationForeignKey:CountryId"` //ISO "ALPHA-2 Code"
+	CountryId	string	`gorm:"primary_key;size:2"`
 }
 
 type Country struct {
@@ -23,7 +24,8 @@ type Place struct {
 	Address		string		`gorm:"size:255"`
 	Latitude	string		`gorm:"size:10"`
 	Longitude	string		`gorm:"size:10"`
-	Services	Service		`gorm:"ForeignKey:Id"`
-	Products	[]Product	`gorm:"many2many:place_products"`
+	Services	Service		`gorm:"ForeignKey:Id;AssociationForeignKey:ServicesId"`
+	ServicesId	string		`gorm:"primary_key;size:2"`
+	Products	[]Product	`gorm:"many2many:place_products;AssociationForeignKey:Id;ForeignKey:Id"`
 }
 

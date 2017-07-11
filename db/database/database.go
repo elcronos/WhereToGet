@@ -31,7 +31,7 @@ func init(){
 
 func OpenConnection() (db *gorm.DB, err error){
 	fmt.Println("Testing postgres...")
-	db, err = gorm.Open("postgres", "host=localhost user=postgres dbname=postgres sslmode=disable port=32768")
+	db, err = gorm.Open("postgres", "host=localhost user=postgres dbname=postgres sslmode=disable port=32769")
 
 	if os.Getenv("DEBUG") == "true" {
 		db.LogMode(true)

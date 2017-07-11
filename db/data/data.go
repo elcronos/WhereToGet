@@ -36,6 +36,10 @@ func InitialiseDB(db *gorm.DB) {
 			PLACES
 		*/
 		insertPlaces(db)
+		/*
+			PLACE
+		*/
+		insertPlaceProducts(db)
 	}
 }
 
@@ -138,4 +142,27 @@ func insertPlaces(db *gorm.DB){
 	db.Exec(query,6,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
 	db.Exec(query,7,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
 	db.Exec(query,8,"Carlton Hotel Bottle Shop","247 Hay street, East Perth","0","0","BT")
+}
+
+
+func insertPlaceProducts(db *gorm.DB){
+	var query = "INSERT INTO place_products VALUES(?,?)"
+	/*
+		TYPE OF PRODUCTS
+	 */
+	db.Exec(query,1,1)
+	db.Exec(query,2,1)
+	db.Exec(query,3,1)
+	db.Exec(query,4,1)
+	db.Exec(query,5,1)
+	db.Exec(query,6,1)
+	db.Exec(query,7,1)
+	db.Exec(query,5,5)
+	db.Exec(query,1,2)
+	db.Exec(query,1,3)
+	db.Exec(query,1,4)
+	db.Exec(query,1,5)
+	db.Exec(query,2,2)
+	db.Exec(query,2,3)
+	db.Exec(query,2,7)
 }
