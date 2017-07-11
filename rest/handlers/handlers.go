@@ -3,17 +3,13 @@ package handlers
 import (
 	. "../../db/dataobjects"
 	db "../../db/database"
+	ex "../errors"
 	"github.com/valyala/fasthttp"
 	"fmt"
 	"strings"
 	"encoding/json"
 	"log"
 )
-
-type errorMessage struct {
-	Status		int		`json:"status"`
-	Message		string	`json:"message"`
-}
 
 func Index(ctx *fasthttp.RequestCtx) {
 	fmt.Fprint(ctx, "Welcome!\n")
@@ -48,10 +44,10 @@ func GetAllPlaces(ctx *fasthttp.RequestCtx) {
 		}
 	} else{
 		log.Fatal("Cannot encode to JSON ", err)
+		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 	// set some headers and status code first
 	ctx.SetContentType("application/json")
-	ctx.SetStatusCode(fasthttp.StatusOK)
 }
 
 func GetPlace(ctx *fasthttp.RequestCtx) {
@@ -59,7 +55,6 @@ func GetPlace(ctx *fasthttp.RequestCtx) {
 	var place Place
 	var service Service
 	var products []Product
-	var error errorMessage
 	// Raw SQL
 	db.DB.First(&place, ctx.UserValue("id"))
 	if place.Id != 0 {
@@ -72,29 +67,22 @@ func GetPlace(ctx *fasthttp.RequestCtx) {
 		p, err := json.Marshal(&place)
 		if err == nil {
 			fmt.Fprintf(ctx, string(p))
-			ctx.SetStatusCode(fasthttp.StatusOK)
+
 		} else {
 			log.Fatal("Cannot encode to JSON ", err)
-			error.Status = fasthttp.StatusInternalServerError
-			error.Message = "Error in handler GetPlace"
-			errorJson, _ := json.Marshal(&error)
-			fmt.Fprintf(ctx, string(errorJson))
-			ctx.SetStatusCode(error.Status)
+			ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 		}
 	}	else{
-		fmt.Fprintf(ctx, string(fasthttp.StatusNoContent))
-		ctx.SetStatusCode(error.Status)
+		ctx = ex.ErrorHandler(ctx, fasthttp.StatusNoContent, "")
 	}
 	// set some headers and status code first
 	ctx.SetContentType("application/json")
-
 }
 
 func GetAllCountries(ctx *fasthttp.RequestCtx) {
 	// Read
 	countries := []Country{}
 	db.DB.Find(&countries) // find places
-	fmt.Println(countries)
 	list, err := json.Marshal(&countries)
 	if err == nil {
 		for _, item := range list {
@@ -103,10 +91,10 @@ func GetAllCountries(ctx *fasthttp.RequestCtx) {
 		}
 	} else{
 		log.Fatal("Cannot encode to JSON ", err)
+		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 	// set some headers and status code first
 	ctx.SetContentType("application/json")
-	ctx.SetStatusCode(fasthttp.StatusOK)
 }
 
 func GetCountry(ctx *fasthttp.RequestCtx) {
@@ -116,12 +104,12 @@ func GetCountry(ctx *fasthttp.RequestCtx) {
 	db.DB.Where("id = ?", strings.ToUpper(ctx.UserValue("id").(string))).First(&country)
 	// set some headers and status code first
 	ctx.SetContentType("application/json")
-	ctx.SetStatusCode(fasthttp.StatusOK)
 	p, err := json.Marshal(&country)
 	if err == nil {
 		fmt.Fprintf(ctx, string(p))
 	} else{
 		log.Fatal("Cannot encode to JSON ", err)
+		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 }
 
@@ -129,7 +117,6 @@ func GetAllServices(ctx *fasthttp.RequestCtx) {
 	// Read
 	services := []Service{}
 	db.DB.Find(&services) // find places
-	fmt.Println(services)
 	list, err := json.Marshal(&services)
 	if err == nil {
 		for _, item := range list {
@@ -138,10 +125,10 @@ func GetAllServices(ctx *fasthttp.RequestCtx) {
 		}
 	} else{
 		log.Fatal("Cannot encode to JSON ", err)
+		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 	// set some headers and status code first
 	ctx.SetContentType("application/json")
-	ctx.SetStatusCode(fasthttp.StatusOK)
 }
 
 func GetService(ctx *fasthttp.RequestCtx) {
@@ -157,6 +144,7 @@ func GetService(ctx *fasthttp.RequestCtx) {
 		fmt.Fprintf(ctx, string(p))
 	} else{
 		log.Fatal("Cannot encode to JSON ", err)
+		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 }
 
@@ -178,10 +166,10 @@ func GetAllProducts(ctx *fasthttp.RequestCtx) {
 		}
 	} else{
 		log.Fatal("Cannot encode to JSON ", err)
+		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 	// set some headers and status code first
 	ctx.SetContentType("application/json")
-	ctx.SetStatusCode(fasthttp.StatusOK)
 }
 
 func GetProduct(ctx *fasthttp.RequestCtx) {
@@ -199,6 +187,8 @@ func GetProduct(ctx *fasthttp.RequestCtx) {
 		ctx.SetStatusCode(fasthttp.StatusOK)
 	} else{
 		log.Fatal("Cannot encode to JSON", err)
+		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
 	}
 	ctx.SetContentType("application/json")
 }
+
