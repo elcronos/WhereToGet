@@ -19,7 +19,6 @@ func init(){
 	if DB, err = OpenConnection(); err != nil {
 		panic(fmt.Sprintf("No error should happen when connecting to database, but got err=%+v", err))
 	}
-
 	//Migrate the schema
 	DB.AutoMigrate(&Service{})
 	DB.AutoMigrate(&Country{})
@@ -31,7 +30,7 @@ func init(){
 
 func OpenConnection() (db *gorm.DB, err error){
 	fmt.Println("Testing postgres...")
-	db, err = gorm.Open("postgres", "host=localhost user=postgres dbname=postgres sslmode=disable port=32769")
+	db, err = gorm.Open("postgres", "host=localhost user=postgres dbname=postgres sslmode=disable port=32768")
 
 	if os.Getenv("DEBUG") == "true" {
 		db.LogMode(true)

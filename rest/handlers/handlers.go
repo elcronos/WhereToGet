@@ -148,25 +148,48 @@ func GetService(ctx *fasthttp.RequestCtx) {
 	ctx = AllowCORS(ctx)
 }
 
-func GetAllProducts(ctx *fasthttp.RequestCtx) {
-	// Read
+func GetAllProducts(ctx *fasthttp.RequestCtx){
+	// Variables
 	var country Country
 	products := []Product{}
-	db.DB.Find(&products) // find products
-	for index, product := range products {
-		//Find Country
-		db.DB.Where("id = ?", product.CountryId).First(&country)
-		products[index].Country = country
-	}
-	list, err := json.Marshal(&products)
-	if err == nil {
-		for _, item := range list {
-			// process here
-			fmt.Fprintf(ctx, string(item))
+	//Read Parameters /products?name:camilo  or /products?country:colombia
+	nameParam := ctx.QueryArgs().Peek("name")
+	countryParam := ctx.QueryArgs().Peek("country")
+	//If a parameter was sent for Products
+	if nameParam != nil || countryParam != nil {
+		if nameParam != nil {
+			//Find product by name
+			db.DB.Where("name LIKE ?", "%"+strings.ToUpper(string(nameParam))+"%").Find(&products) // find products
+		}else{
+			//Find Country by name
+			db.DB.Where("name LIKE ?", "%"+strings.ToUpper(string(countryParam))+"%").First(&country)
+			if country.Id != "" {
+				//Find product by country
+				db.DB.Where("country_id = ?", country.Id).Find(&products)
+			}
 		}
-	} else{
-		log.Fatal("Cannot encode to JSON ", err)
-		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
+	}else {
+		db.DB.Find(&products) // find products
+	}
+	//There are some values
+	if len(products) > 0 {
+		for index, product := range products {
+			//Find Country
+			db.DB.Where("id = ?", product.CountryId).First(&country)
+			products[index].Country = country
+		}
+		list, err := json.Marshal(&products)
+		if err == nil {
+			for _, item := range list {
+				// process here
+				fmt.Fprintf(ctx, string(item))
+			}
+		} else {
+			log.Fatal("Cannot encode to JSON ", err)
+			ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
+		}
+	}else{
+		ctx = ex.ErrorHandler(ctx, fasthttp.StatusNoContent, "")
 	}
 	// set some headers and status code first
 	ctx = AllowCORS(ctx)
