@@ -101,32 +101,32 @@ func insertServices(db *gorm.DB){
 }
 
 func insertProducts(db *gorm.DB){
-	var query = "INSERT INTO products VALUES(?,?,?,?)"
+	var query = "INSERT INTO products VALUES(?,?,?,?,?)"
 	/*
 		TYPE OF PRODUCTS
 	 */
-	db.Exec(query,1,"AGUARDIENTE ANTIOQUEÑO","","CO")
-	db.Exec(query,2,"AJIACO CONGELADO","","CO")
-	db.Exec(query,3,"AREPAS","","CO")
-	db.Exec(query,4,"AREQUIPE","","CO")
-	db.Exec(query,5,"BOCADILLO","","CO")
-	db.Exec(query,6,"BOM BOM BUM","","CO")
-	db.Exec(query,7,"CAFECITO","","CO")
-	db.Exec(query,8,"CHOCOLATINA JET","","CO")
-	db.Exec(query,9,"CHORIZO","","CO")
-	db.Exec(query,10,"CROQUETAS DE YUCA","","CO")
-	db.Exec(query,11,"HARINA PAN","","CO")
-	db.Exec(query,12,"MASA DE BUÑUELOS","","CO")
-	db.Exec(query,13,"PAN DE BONO","","CO")
-	db.Exec(query,14,"PANELA","","CO")
-	db.Exec(query,15,"PAPAS CRIOLLAS","","CO")
-	db.Exec(query,16,"PONY MALTA","","CO")
-	db.Exec(query,17,"PULPAS DE FRUTA","","CO")
-	db.Exec(query,18,"RON MEDELLIN","","CO")
-	db.Exec(query,19,"SANCOCHO CONGELADO","","CO")
-	db.Exec(query,20,"TAJADAS DE PLATANO","","CO")
-	db.Exec(query,21,"TOSTONES","","CO")
-	db.Exec(query,22,"TRIGUISAR","","CO")
+	db.Exec(query,1,"AGUARDIENTE ANTIOQUEÑO","","CO","aguardiente.png")
+	db.Exec(query,2,"AJIACO CONGELADO","","CO","ajiaco.png")
+	db.Exec(query,3,"AREPAS","","CO","arepa.png")
+	db.Exec(query,4,"AREQUIPE","","CO", "arequipe.png")
+	db.Exec(query,5,"BOCADILLO","","CO","bocadillo.png")
+	db.Exec(query,6,"BOM BOM BUM","","CO","bombombum.png")
+	db.Exec(query,7,"CAFECITO","","CO","cafe.png")
+	db.Exec(query,8,"CHOCOLATINA JET","","CO","chocolatinajet.png")
+	db.Exec(query,9,"CHORIZO","","CO","chorizo.png")
+	db.Exec(query,10,"CROQUETAS DE YUCA","","CO","croquetasyuca.png")
+	db.Exec(query,11,"HARINA PAN","","CO","harinapan.png")
+	db.Exec(query,12,"MASA DE BUÑUELOS","","CO","bunuelos.png")
+	db.Exec(query,13,"PAN DE BONO","","CO","pandebono.png")
+	db.Exec(query,14,"PANELA","","CO","panela.png")
+	db.Exec(query,15,"PAPAS CRIOLLAS","","CO","papascriollas.png")
+	db.Exec(query,16,"PONY MALTA","","CO","ponymalta.png")
+	db.Exec(query,17,"PULPAS DE FRUTA","","CO","pulpafruta.png")
+	db.Exec(query,18,"RON MEDELLIN","","CO","ronmedellin.png")
+	db.Exec(query,19,"SANCOCHO CONGELADO","","CO","sancochocongelado.png")
+	db.Exec(query,20,"TAJADAS DE PLATANO","","CO","tajadasplatano.png")
+	db.Exec(query,21,"TOSTONES","","CO","tostones.png")
+	db.Exec(query,22,"TRIGUISAR","","CO","triguisar.png")
 }
 
 func insertPlaces(db *gorm.DB){

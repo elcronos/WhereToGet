@@ -6,6 +6,7 @@ type Product struct {
 	Alias		string	`gorm:"size:250" json:"alias"`
 	Country		Country	`gorm:"ForeignKey:Id;AssociationForeignKey:CountryId" json:"country"` //ISO "ALPHA-2 Code"
 	CountryId	string	`gorm:"size:2" json:"countryId,omitempty"`
+	Image		string	`gorm:"size:250" json:"image"`
 }
 
 type Country struct {

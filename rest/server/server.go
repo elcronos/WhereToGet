@@ -5,11 +5,22 @@ import (
 	handler "../handlers"
 	"github.com/buaazp/fasthttprouter"
 	"github.com/valyala/fasthttp"
+	"github.com/GeertJohan/go.rice"
+	"net/http"
 )
 
+
+
 func init(){
+	finish := make(chan bool)
 	//FastHttpRouter
 	routes := fasthttprouter.New()
+	// Box File Server
+	box := rice.MustFindBox("static").HTTPBox()
+	http.Handle("/", http.FileServer(box))
+	go func() {
+		http.ListenAndServe(":3001", nil)
+	}()
 	//All Routes
 	routes.GET("/", handler.Index)
 	routes.GET("/hello/:name", handler.Hello)
@@ -23,5 +34,9 @@ func init(){
 	routes.GET("/products/:id", handler.GetProduct)
 
 	//Routes Handler
-	log.Fatal(fasthttp.ListenAndServe(":3000", routes.Handler))
+	go func() {
+		log.Fatal(fasthttp.ListenAndServe(":3000", routes.Handler))
+	}()
+
+	<-finish
 }
