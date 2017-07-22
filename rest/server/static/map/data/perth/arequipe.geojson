@@ -1,0 +1,20 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Kakulas Brothers",
+        "description": "183 William St, Northbridge WA 6003"
+      },
+      "geometry": {
+        "coordinates": [
+          115.856653,
+          -31.949549
+        ],
+        "type": "Point"
+      },
+      "id": "883b771413dea51bbb703d0cdf3d282b"
+    }
+  ],
+  "type": "FeatureCollection"
+}

@@ -1,0 +1,110 @@
+﻿{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Carlton Fresh",
+        "description": "246 Hay St, East Perth WA 6004"
+      },
+      "geometry": {
+        "coordinates": [
+          115.869417,
+          -31.958154
+        ],
+        "type": "Point"
+      },
+      "id": "1ac7213dd96c1c256f2ba9b30d993a09"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Jon Sanders Drive shop",
+        "description": "Glendalough 4-8 Jon Sanders Drive shop 1, Perth, Western Australia 6016"
+      },
+      "geometry": {
+        "coordinates": [
+          115.817163,
+          -31.922122
+        ],
+        "type": "Point"
+      },
+      "id": "4455de836c03130833bc7f92be6df577"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "European Foods Wholesalers",
+        "description": "95 Aberdeen St, Northbridge WA 6003"
+      },
+      "geometry": {
+        "coordinates": [
+          115.856207,
+          -31.946525
+        ],
+        "type": "Point"
+      },
+      "id": "5577562b692d04a938adf83a5495782b"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Kakulas Brothers",
+        "description": "183 William St, Northbridge WA 6003"
+      },
+      "geometry": {
+        "coordinates": [
+          115.856653,
+          -31.949549
+        ],
+        "type": "Point"
+      },
+      "id": "883b771413dea51bbb703d0cdf3d282b"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Ace Asian Mini Mart",
+        "description": "11a/824 Beeliar Dr, Success WA 6164"
+      },
+      "geometry": {
+        "coordinates": [
+          115.853474,
+          -32.128891
+        ],
+        "type": "Point"
+      },
+      "id": "9bb45b5d84b31d7aa913f6f8916a03fe"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "MCQ supermarket",
+        "description": "Coventry Village, Morley"
+      },
+      "geometry": {
+        "coordinates": [
+          115.892678,
+          -31.894706
+        ],
+        "type": "Point"
+      },
+      "id": "d861ca3febf537f55b01e3c7457d0b09"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Multicultural foods",
+        "description": "Woodlake shopping center"
+      },
+      "geometry": {
+        "coordinates": [
+          115.970052,
+          -31.790083
+        ],
+        "type": "Point"
+      },
+      "id": "eb6fa00bc8e97a353901ed13a91cd5e5"
+    }
+  ],
+  "type": "FeatureCollection"
+}

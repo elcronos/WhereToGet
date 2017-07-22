@@ -1,0 +1,80 @@
+﻿{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Carlton Fresh",
+        "description": "246 Hay St, East Perth WA 6004"
+      },
+      "geometry": {
+        "coordinates": [
+          115.869417,
+          -31.958154
+        ],
+        "type": "Point"
+      },
+      "id": "1ac7213dd96c1c256f2ba9b30d993a09"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Spudshed Morley",
+        "description": "Coventry Village, 243-253 Walter Rd W, Morley WA 6062"
+      },
+      "geometry": {
+        "coordinates": [
+          115.892793,
+          -31.89487
+        ],
+        "type": "Point"
+      },
+      "id": "6506b4e7063bddf0eeca69839e87b54e"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Ace Asian Mini Mart",
+        "description": "11a/824 Beeliar Dr, Success WA 6164"
+      },
+      "geometry": {
+        "coordinates": [
+          115.853474,
+          -32.128891
+        ],
+        "type": "Point"
+      },
+      "id": "9bb45b5d84b31d7aa913f6f8916a03fe"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "MCQ supermarket",
+        "description": "Coventry Village, Morley"
+      },
+      "geometry": {
+        "coordinates": [
+          115.892678,
+          -31.894706
+        ],
+        "type": "Point"
+      },
+      "id": "d861ca3febf537f55b01e3c7457d0b09"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Multicultural foods",
+        "description": "Woodlake shopping center"
+      },
+      "geometry": {
+        "coordinates": [
+          115.970052,
+          -31.790083
+        ],
+        "type": "Point"
+      },
+      "id": "eb6fa00bc8e97a353901ed13a91cd5e5"
+    }
+  ],
+  "type": "FeatureCollection"
+}

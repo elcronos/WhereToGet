@@ -6,13 +6,14 @@ type Product struct {
 	Alias		string	`gorm:"size:250" json:"alias"`
 	Country		Country	`gorm:"ForeignKey:Id;AssociationForeignKey:CountryId" json:"country"` //ISO "ALPHA-2 Code"
 	CountryId	string	`gorm:"size:2" json:"countryId,omitempty"`
-	Image		string	`gorm:"size:250" json:"image"`
+	FileName	string	`gorm:"size:250" json:"file"`
 }
 
 type Country struct {
 	Id		string	`gorm:"primary_key;size:2" json:"id"`
 	Name	string	`gorm:"size:150" json:"name"`
 }
+
 
 type Service struct {
 	Id		string	`gorm:"primary_key;size:2" json:"id"` //Two letter key

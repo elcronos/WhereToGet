@@ -1,0 +1,20 @@
+﻿{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Carlton Fresh",
+        "description": "246 Hay St, East Perth WA 6004"
+      },
+      "geometry": {
+        "coordinates": [
+          115.869417,
+          -31.958154
+        ],
+        "type": "Point"
+      },
+      "id": "1ac7213dd96c1c256f2ba9b30d993a09"
+    }
+  ],
+  "type": "FeatureCollection"
+}

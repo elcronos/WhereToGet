@@ -1,0 +1,20 @@
+﻿{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Carlton Hotel bottle shop",
+        "description": "247 Hay street. East Perth"
+      },
+      "geometry": {
+        "coordinates": [
+          115.861672,
+          -31.956337
+        ],
+        "type": "Point"
+      },
+      "id": "eeaeb809bd668b8fb9878882d1ded255"
+    }
+  ],
+  "type": "FeatureCollection"
+}

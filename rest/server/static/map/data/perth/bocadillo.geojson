@@ -1,0 +1,35 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Spudshed Morley",
+        "description": "Coventry Village, 243-253 Walter Rd W, Morley WA 6062"
+      },
+      "geometry": {
+        "coordinates": [
+          115.892793,
+          -31.89487
+        ],
+        "type": "Point"
+      },
+      "id": "6506b4e7063bddf0eeca69839e87b54e"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Ace Asian Mini Mart",
+        "description": "11a/824 Beeliar Dr, Success WA 6164"
+      },
+      "geometry": {
+        "coordinates": [
+          115.853474,
+          -32.128891
+        ],
+        "type": "Point"
+      },
+      "id": "9bb45b5d84b31d7aa913f6f8916a03fe"
+    }
+  ],
+  "type": "FeatureCollection"
+}

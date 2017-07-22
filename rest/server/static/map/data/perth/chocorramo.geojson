@@ -1,0 +1,20 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Spudshed Innaloo",
+        "description": "37 Ellen Stirling Blvd, Innaloo"
+      },
+      "geometry": {
+        "coordinates": [
+          115.8007914,
+          -31.8994838
+        ],
+        "type": "Point"
+      },
+      "id": "d861ca3febf537f55b01e3c7457d0b09"
+    }
+  ],
+  "type": "FeatureCollection"
+}

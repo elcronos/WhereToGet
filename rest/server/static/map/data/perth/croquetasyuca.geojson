@@ -1,0 +1,20 @@
+﻿{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Jon Sanders Drive shop",
+        "description": "Glendalough 4-8 Jon Sanders Drive shop 1, Perth, Western Australia 6016"
+      },
+      "geometry": {
+        "coordinates": [
+          115.817163,
+          -31.922122
+        ],
+        "type": "Point"
+      },
+      "id": "4455de836c03130833bc7f92be6df577"
+    }
+    ],
+  "type": "FeatureCollection"
+}

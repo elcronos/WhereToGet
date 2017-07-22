@@ -9,7 +9,13 @@ import (
 	"net/http"
 )
 
-
+func handleCORS(h http.Handler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Access-Control-Allow-Origin", "*")
+		w.Header().Add("Content-Type", "application/json")
+		h.ServeHTTP(w, r)
+	}
+}
 
 func init(){
 	finish := make(chan bool)
@@ -17,7 +23,7 @@ func init(){
 	routes := fasthttprouter.New()
 	// Box File Server
 	box := rice.MustFindBox("static").HTTPBox()
-	http.Handle("/", http.FileServer(box))
+	http.Handle("/", handleCORS(http.FileServer(box)))
 	go func() {
 		http.ListenAndServe(":3001", nil)
 	}()

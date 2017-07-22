@@ -1,0 +1,20 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Spudshed Morley",
+        "description": "Coventry Village, 243-253 Walter Rd W, Morley WA 6062"
+      },
+      "geometry": {
+        "coordinates": [
+          115.892793,
+          -31.89487
+        ],
+        "type": "Point"
+      },
+      "id": "6506b4e7063bddf0eeca69839e87b54e"
+    }
+  ],
+  "type": "FeatureCollection"
+}
