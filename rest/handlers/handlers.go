@@ -5,10 +5,12 @@ import (
 	db "../../db/database"
 	ex "../errors"
 	"github.com/valyala/fasthttp"
+	"github.com/jordan-wright/email"
 	"fmt"
 	"strings"
 	"encoding/json"
 	"log"
+	"net/smtp"
 )
 
 func Index(ctx *fasthttp.RequestCtx) {
@@ -215,8 +217,39 @@ func GetProduct(ctx *fasthttp.RequestCtx) {
 	ctx = AllowCORS(ctx)
 }
 
+func SendEmail(ctx *fasthttp.RequestCtx) {
+	ctx = AllowCORS(ctx)
+	var m Email
+	byteArray := ctx.Request.Body()
+	err := json.Unmarshal(byteArray, &m)
+	if err == nil {
+		e := email.NewEmail()
+		e.From = m.Name+ "<"+m.Email+">"
+		e.To = []string{"capcarde@gmail.com"}
+		e.Subject = "WTG Contact Us Email from"
+		e.Text = []byte(m.Message)
+		e.HTML = []byte("<p>"+m.Message+"</p>")
+		e.Send("smtp.gmail.com:587", smtp.PlainAuth("", "capcarde@gmail.com", "PASSWORD", "smtp.gmail.com"))
+		ctx.SetStatusCode(fasthttp.StatusOK)
+	}else {
+		log.Fatal("Error while sending email", err)
+		ctx = ex.ErrorHandler(ctx, fasthttp.StatusInternalServerError, err.Error())
+	}
+}
+
+func OptionsResponse(ctx *fasthttp.RequestCtx){
+	ctx.Response.Header.Add("Allow", "GET,POST,OPTIONS")
+	ctx.Response.Header.Add("Access-Control-Allow-Origin", "*")
+	ctx.Response.Header.Add("Access-Control-Allow-Methods", "POST,GET,OPTIONS")
+	ctx.Response.Header.Add("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers")
+	ctx.Response.Header.Add("Content-Type", "application/json")
+	ctx.SetStatusCode(fasthttp.StatusOK)
+}
+
 func AllowCORS(ctx *fasthttp.RequestCtx) *fasthttp.RequestCtx{
 	ctx.Response.Header.Add("Access-Control-Allow-Origin", "*")
+	ctx.Response.Header.Add("Access-Control-Allow-Methods", "POST,GET,OPTIONS")
 	ctx.Response.Header.Add("Content-Type", "application/json")
+
 	return ctx
 }

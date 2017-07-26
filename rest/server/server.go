@@ -38,6 +38,8 @@ func init(){
 	routes.GET("/services/:id", handler.GetService)
 	routes.GET("/products", handler.GetAllProducts)
 	routes.GET("/products/:id", handler.GetProduct)
+	routes.POST("/email", handler.SendEmail)
+	routes.OPTIONS("/email", handler.OptionsResponse)
 
 	//Routes Handler
 	go func() {

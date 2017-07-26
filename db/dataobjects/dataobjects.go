@@ -31,3 +31,9 @@ type Place struct {
 	Products	[]Product	`gorm:"many2many:place_products;AssociationForeignKey:Id;ForeignKey:Id" json:"products"`
 }
 
+type Email struct {
+	Name	string `json: "name"`
+	Email	string `json: "email"`
+	Message string `json: "message"`
+}
+
